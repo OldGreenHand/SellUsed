@@ -1,0 +1,72 @@
+﻿@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            // Show Ads respectively
+            $(function () {
+                $('#myTabs a').click(function (e) {
+                    e.preventDefault();
+                    var $this = $(this);
+                    var href = this.hash;
+                    var url = $this.attr("data-url");
+
+                    // ajax load from data-url
+                    $(href).load(url, function (result) {
+                        $this.tab('show');
+                    });
+                });
+
+                // load first tab content
+                $('#adsOn').load($('.active a').attr("data-url"), function (result) {
+                    $('.active a').tab('show');
+                });
+            });
+        });
+    </script>
+}
+
+@{
+    ViewBag.Title = "My Ads";
+    if (TempData["ImageUploadFlag"] != null)
+    {
+        if ((Boolean)TempData["ImageUploadFlag"] == true)
+        {
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/css/bootstrap-dialog.min.css" rel="stylesheet" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.34.7/js/bootstrap-dialog.min.js"></script>
+            <script>
+                BootstrapDialog.show({
+                    message: 'Images Uploaded Successfully!',
+                    buttons: [{
+                        label: 'Confirm',
+                        cssClass: 'btn-primary',
+                        action: function (dialogItself) {
+                            dialogItself.close();
+                        }
+                    }]
+                });
+            </script>
+        }
+    }
+}
+
+<div class="page-header">
+    <button type="button" class="btn btn-success pull-right" onclick="location.href = '@Url.Action("Create", "Ads")'">
+        Post a new Ad
+    </button>
+    <h2>My Advertisements</h2>  
+</div>
+<div class="container">
+    <ul class="nav nav-pills nav-justified" id="myTabs">
+        <li class="active"><a href="#adsOn" id="tb_1" data-url="@Url.Action("ShowAdsOn", "Ads")">Displaying</a></li>
+        <li><a href="#adsOff" id="tb_2" data-url="@Url.Action("ShowAdsOff", "Ads")">Paused ads</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="adsOn">
+
+        </div>
+        <div class="tab-pane" id="adsOff">
+
+        </div>
+    </div>
+</div>

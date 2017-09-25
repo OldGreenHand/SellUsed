@@ -1,0 +1,34 @@
+﻿@model SellUsed.ViewModels.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+<div class="social-bottons-w3ls">
+    @{
+        var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+        if (loginProviders.Count() != 0)
+        {
+            foreach (AuthenticationDescription p in loginProviders)
+            {
+                if (p.AuthenticationType == "Facebook")
+                {
+                    <button class="btn omb_btn-facebook" id="@p.AuthenticationType" onclick="location.href = '@Url.Action("ExternalLogin", "Account", new { provider = p.AuthenticationType, returnUrl = Model.ReturnUrl })'">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>@p.AuthenticationType+
+                    </button>
+                    //<button class="btn omb_btn-facebook" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"><i class="fa fa-facebook" aria-hidden="true"></i>@p.AuthenticationType</button>
+                }
+                else if (p.AuthenticationType == "Twitter")
+                {
+                    <button class="btn omb_btn-twitter" id="@p.AuthenticationType" onclick="location.href = '@Url.Action("ExternalLogin", "Account", new { provider = p.AuthenticationType, returnUrl = Model.ReturnUrl })'">
+                        <i class="fa fa-twitter" aria-hidden="true"></i>@p.AuthenticationType+
+                    </button>
+                    //<button class="btn omb_btn-twitter" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"><i class="fa fa-twitter" aria-hidden="true"></i><span>@p.AuthenticationType</span></button>
+                }
+                else if (p.AuthenticationType == "Google")
+                {
+                    <button class="btn omb_btn-google" id="@p.AuthenticationType" onclick="location.href = '@Url.Action("ExternalLogin", "Account", new { provider = p.AuthenticationType, returnUrl = Model.ReturnUrl })'">
+                        <i class="fa fa-google-plus" aria-hidden="true"></i>@p.AuthenticationType+
+                    </button>
+                }
+            }
+        }
+    }
+</div>

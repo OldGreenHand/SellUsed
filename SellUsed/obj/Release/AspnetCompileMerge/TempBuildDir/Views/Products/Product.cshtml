@@ -1,0 +1,119 @@
+﻿@using SellUsed.Models
+@model SellUsed.ViewModels.ProductsListViewModel
+
+@*<script src="~/Scripts/paging.js"></script>*@
+
+<style>
+    .image {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: 100%;
+    }
+
+    .image img {
+        position: absolute;
+    }
+</style>
+
+<!-- items being paged -->
+@foreach (var item in Model.Products)
+{
+    string Username = Model.Username.Dequeue();
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+        <div class="image">
+            @Html.Action("DisplayThumbnail", "Image", new { productid = item.ProductId })
+        </div>
+    </div>
+
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    @Html.ActionLink(item.Name, "Details", new { id = item.ProductId })
+                    @if (item.Category == Category.Jobs)
+                    {
+                        <span class="pull-right label label-primary">@item.Price.ToString("c")/h</span>
+                    }
+                    else
+                    {
+                        <span class="pull-right label label-primary">@item.Price.ToString("c")</span>
+                    }
+                    @if (Model.FavoriteAds.Select(x => x.ProductId).ToList().Contains(item.ProductId))
+                    {
+                        <div id="favoriteButton" class="favorates-icon glyphicon glyphicon-star pull-right" data-id="@item.ProductId" style="cursor: pointer">
+                            <span> </span>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="favoriteButton" class="favorates-icon glyphicon glyphicon-star-empty pull-right" data-id="@item.ProductId" style="cursor: pointer">
+                            <span> </span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="panel-body">
+                @item.Description
+                @item.Description
+                <hr />
+                <div class="col-sm-6 col-md-6">
+                    <div class="label label-default">
+                        <strong>@item.Createtime.ToString()</strong>
+                    </div>
+                    <div class="pull-right label label-info">
+                        <strong>@item.State, @item.Suburb</strong>
+                    </div>
+                </div>
+                <div class="label label-success pull-right">
+                    Owner: @Username
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Number of Ads pre Page -->
+<div class="dropdown pull-right">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <div id="numberbox"></div>
+        @Model.Pager.PageSize Ads/Page <span class="caret"></span>
+    </button>
+    <ul id="page_dropdown" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li class="dropdown-header">Number of Ads pre Page</li>
+        <li><a href="@Url.Action(Model.ViewName, "Products", new { page = 1, pageSize = 5 })">5</a></li>
+        <li><a href="@Url.Action(Model.ViewName, "Products", new { page = 1, pageSize = 10 })">10</a></li>
+        <li><a href="@Url.Action(Model.ViewName, "Products", new { page = 1, pageSize = 20 })">20</a></li>
+    </ul>
+</div>
+
+<!-- Pagination -->
+<nav class="text-center" aria-label="Page Navigation">
+    
+    @if (Model.Pager.EndPage > 1)
+    {
+        <ul class="pagination">
+            @if (Model.Pager.CurrentPage > 1)
+            {
+                <li><a class="page_1" href="@Url.Action(Model.ViewName, "Products", new { page = 1, pageSize = Model.Pager.PageSize })">First</a></li>
+                <li><a class="page_2" href="@Url.Action(Model.ViewName, "Products", new { page = Model.Pager.CurrentPage - 1, pageSize = Model.Pager.PageSize })" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+            {
+                <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
+                    <a class="page_3" href="@Url.Action(Model.ViewName, "Products", new { page = page, pageSize = Model.Pager.PageSize })">@page</a>
+                </li>    
+            }
+            @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+            {
+                <li><a class="page_4" href="@Url.Action(Model.ViewName, "Products", new { page = Model.Pager.CurrentPage + 1, pageSize = Model.Pager.PageSize })" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li><a class="page_5" href="@Url.Action(Model.ViewName, "Products", new { page = Model.Pager.TotalPages, pageSize = Model.Pager.PageSize })">Last</a></li>
+            }
+        </ul>
+    }
+</nav>

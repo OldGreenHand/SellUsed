@@ -1,0 +1,83 @@
+﻿@model SellUsed.ViewModels.AdsListViewModel
+
+@if (Model.Products.Count() > 0)
+{
+    <!-- items being paged -->
+    foreach (var item in Model.Products)
+    {
+        if (item.Status == false)
+        {
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="panel-title">
+                        @Html.ActionLink(item.Name, "Details", new { id = item.ProductId })
+                        <span class="pull-right label label-primary">@item.Price.ToString("c")</span>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    @item.Description
+                    <hr />
+                    <div class="col-sm-6 col-md-6">
+                        <div class="label label-default">
+                            <strong>@item.Createtime.ToString()</strong>
+                        </div>
+                        <div class="pull-right label label-info">
+                            <strong>@item.State, @item.Suburb</strong>
+                        </div>
+                    </div>
+
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default" onclick="location.href = '@Url.Action("Edit", "Ads", new { id = item.ProductId })'">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="location.href = '@Url.Action("ChangeStatus", "Ads", new { id = item.ProductId })'">
+                            <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Activate
+                        </button>
+                        <button type="button" class="btn btn-default" onclick="location.href = '@Url.Action("Delete", "Ads", new { id = item.ProductId })'">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    <!-- Pagination -->
+    <nav class="text-center" aria-label="Page Navigation">
+        @if (Model.Pager.EndPage > 1)
+        {
+            <ul class="pagination">
+                @if (Model.Pager.CurrentPage > 1)
+                {
+                    <li><a href="~/Ads/Index">First</a></li>
+                    <li>
+                        <a href="~/Ads/Index?page=@(Model.Pager.CurrentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+                @for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+                {
+                    <li class="@(page == Model.Pager.CurrentPage ? "active" : "")">
+                        <a href="~/Ads/Index?page=@page">@page</a>
+                    </li>
+                }
+                @if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+                {
+                    <li>
+                        <a href="~/Ads/Index?page=@(Model.Pager.CurrentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="~/Ads/Index?page=@(Model.Pager.TotalPages)">Last</a></li>
+                }
+            </ul>
+        }
+    </nav>
+}
+else
+{
+    <div class="well">
+        <h2>There are no Ads paused now!</h2>
+    </div>
+}

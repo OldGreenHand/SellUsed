@@ -1,0 +1,10 @@
+﻿@model SellUsed.Models.ProductImages
+
+@if (object.ReferenceEquals(null, Model))
+{
+    <img src="~/Images/uploadimage.png" class="img img-responsive full-width" />
+}
+else
+{
+    <img src="data:image;base64,@System.Convert.ToBase64String((byte[])Model.File.ToArray())" class="img img-responsive full-width" />
+}

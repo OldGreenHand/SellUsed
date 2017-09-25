@@ -1,0 +1,16 @@
+﻿@model IEnumerable<SellUsed.Models.ProductImages>
+
+<div class="row">
+    <p>There are @Model.Count() picture(s).</p>
+    <hr />
+    @foreach (var file in Model)
+    {
+        <div class="col-md-6">
+            <img src="data:image;base64,@System.Convert.ToBase64String((byte[])file.File.ToArray())" style="max-width:100%; height: auto" />
+        </div>
+        //var base64 = Convert.ToBase64String(file.File);
+        //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        //<img src="@imgSrc" />
+    }  
+</div>
+<div class="clearfix"></div>

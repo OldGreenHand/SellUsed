@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNet.Identity
+@model SellUsed.ViewModels.ChatViewModel
+
+<style>
+    .vertical-center-row {
+        display: table;
+        margin: 0 auto;
+    }
+</style>
+
+<ul class="list-unstyled">
+    @{ int unread = Model.Messages.Count();}
+    @foreach (var message in Model.Messages)
+    {
+        if (message.FromUserId == User.Identity.GetUserId())
+        {
+            <li class="left clearfix admin_chat">
+                <span class="chat-img1 pull-right">
+                    <img src="/Images/user.png" alt="User Avatar" class="img-circle">
+                </span>
+                <div class="chat-body1 clearfix">
+                    <p class="text-right">@message.Message</p>
+                    <div class="chat_time pull-left">@message.Createtime.ToString("HH:mm")</div>
+                </div>
+            </li>
+        }
+        else if (message.ToUserId == User.Identity.GetUserId())
+        {
+            <li class="left clearfix">
+                <span class="chat-img1 pull-left">
+                    <img src="/Images/user.png" alt="User Avatar" class="img-circle">
+                </span>
+                <div class="chat-body1 clearfix">
+                    <p>@message.Message</p>
+                    <div class="chat_time pull-right">@message.Createtime.ToString("HH:mm")</div>
+                </div>
+            </li>
+        }
+        unread--;
+        if (unread == Model.UnreadMessagesNo)
+        {
+            <li class="vertical-center-row clearfix">
+                <div class="label-default text-center">
+                    Above messages are your history
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+
+

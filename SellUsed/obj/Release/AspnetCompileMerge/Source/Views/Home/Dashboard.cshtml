@@ -1,0 +1,205 @@
+﻿@model SellUsed.ViewModels.DashboardViewModel
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+<link href="~/Content/dashboard.min.css" rel="stylesheet" />
+<script src="~/Scripts/Chart.js"></script>
+<script src="~/Scripts/skycons.js"></script>
+
+<h5>  </h5>
+<h2>Dashboard</h2>
+
+<div class="main-content">
+    <div id="page-wrapper">
+            <div class="four-grids">
+                <div class="col-md-3 four-grid">
+                    <div class="four-grid1">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-briefcase" aria-hidden="true"></i>
+                        </div>
+                        <div class="four-text">
+                            <h3>Post</h3>
+                            <h4>@Model.AdsNo Ads</h4>
+                        </div>
+                        @Html.ActionLink("More Info", "Index", "Ads")
+                    </div>
+                </div>
+                <div class="col-md-3 four-grid">
+                    <div class="four-grid2">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-star " aria-hidden="true"></i>
+                        </div>
+                        <div class="four-text">
+                            <h3>Favorites</h3>
+                            <h4>@Model.FavoritesNo</h4>
+                        </div>
+                        @Html.ActionLink("More Info", "Index", "Favorites")
+                    </div>
+                </div>
+                <div class="col-md-3 four-grid">
+                    <div class="four-grid3">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-envelope" aria-hidden="true"></i>
+                        </div>
+                        <div class="four-text">
+                            <h3>From @Model.ContactsNo People</h3>
+                            <h4>@Model.UnreadNo Unreads</h4>
+                        </div>
+                        @Html.ActionLink("More Info", "Index", "Chat")
+                    </div>
+                </div>
+                <div class="col-md-3 four-grid">
+                    <div class="four-grid4">
+                        <div class="icon">
+                            <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                        </div>
+                        <div class="four-text">
+                            <h3>Accounts</h3>
+                            <h4>Manage profile</h4>
+                        </div>
+                        @Html.ActionLink("More Info", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="weathers-grids">
+                <div class="col-md-6 weather-grid">
+                    <div class="main-info">
+                        <div class="weather-top">
+                            <div class="weather-grids">
+                                <h3 class="fri">@DateTime.Now.DayOfWeek </h3>
+                                <h3>Weather</h3>
+                            </div>
+                            <div class="weather-grids weather-mdl">
+                                <canvas id="clear-day" width="70" height="70"></canvas>
+                            </div>
+                            <div class="weather-grids">
+                                <h4>Max 13°</h4>
+                                <h2>10°C</h2>
+                                <h4>Min -1°</h4>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="weather-bottom">
+                            <ul>
+                                <li class="bg">
+                                    <h4>SUN</h4>
+                                    <figure class="icons">
+                                        <canvas id="cloudy" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>12°C</h5>
+                                    <h6>0°C</h6>
+                                </li>
+                                <li>
+                                    <h4>MON</h4>
+                                    <figure class="icons">
+                                        <canvas id="sleet" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>12°C</h5>
+                                    <h6>-3°C</h6>
+                                </li>
+                                <li class="bg">
+                                    <h4>TUE</h4>
+                                    <figure class="icons">
+                                        <canvas id="rain" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>11°C</h5>
+                                    <h6>-2°C</h6>
+                                </li>
+                                <li>
+                                    <h4>WED</h4>
+                                    <figure class="icons">
+                                        <canvas id="snow" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>11°C</h5>
+                                    <h6>-1°C</h6>
+                                </li>
+                                <li class="bg">
+                                    <h4>THR</h4>
+                                    <figure class="icons">
+                                        <canvas id="wind" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>11°C</h5>
+                                    <h6>0°C</h6>
+                                </li>
+                                <li>
+                                    <h4>FRI</h4>
+                                    <figure class="icons">
+                                        <canvas id="clear-night" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>13°C</h5>
+                                    <h6>-1°C</h6>
+                                </li>
+                                <li class="bg">
+                                    <h4>SAT</h4>
+                                    <figure class="icons">
+                                        <canvas id="partly-cloudy-day" width="40" height="40"></canvas>
+                                    </figure>
+                                    <h5>11°C</h5>
+                                    <h6>-1°C</h6>
+                                </li>
+
+                            </ul>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <script>
+                            var icons = new Skycons({ "color": "#68b828" }),
+                                list = [
+                                    "clear-day"
+                                ],
+                                i;
+
+                            for (i = list.length; i--;)
+                                icons.set(list[i], list[i]);
+
+                            icons.play();
+                        </script>
+                        <script>
+                            var icons = new Skycons({ "color": "#f7aa47" }),
+                                list = [
+                                    "clear-night", "partly-cloudy-day",
+                                    "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+                                    "fog"
+                                ],
+                                i;
+
+                            for (i = list.length; i--;)
+                                icons.set(list[i], list[i]);
+
+                            icons.play();
+                        </script>
+                    </div>
+                </div>
+                <div class="col-md-6 graph-grid">
+                    <div class="mani-grp">
+                        <canvas id="bar" height="330" width="650"></canvas>
+                        <script>
+
+                            var barChartData = {
+                                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                                datasets: [
+                                    {
+                                        fillColor: "#f7aa47",
+                                        strokeColor: "#FFF",
+                                        data: [65, 59, 90, 81, 56, 55, 40]
+                                    },
+                                    {
+                                        fillColor: "#0e62c7",
+                                        strokeColor: "#FFF",
+                                        data: [28, 48, 40, 19, 96, 27, 100]
+                                    }
+                                ]
+
+                            }
+
+                            var myLine = new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+
+                        </script>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+</div>

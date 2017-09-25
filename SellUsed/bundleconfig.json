@@ -1,0 +1,62 @@
+[
+  {
+    "outputFileName": "Content/creative.min.css",
+    "inputFiles": [
+      "Content/creative.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/bootstrap.min.css",
+    "inputFiles": [
+      "Content/bootstrap.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/jquery.ui.chatbox.min.css",
+    "inputFiles": [
+      "Content/jquery.ui.chatbox.css"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/creative.min.js",
+    "inputFiles": [
+      "Scripts/creative.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/app/login.min.js",
+    "inputFiles": [
+      "Scripts/app/login.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/particleground.min.js",
+    "inputFiles": [
+      "Scripts/particleground.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/login.min.css",
+    "inputFiles": [
+      "Content/login.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/chat-ui.min.css",
+    "inputFiles": [
+      "Content/chat-ui.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/homepage.min.css",
+    "inputFiles": [
+      "Content/homepage.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/dashboard.min.css",
+    "inputFiles": [
+      "Content/dashboard.css"
+    ]
+  }
+]

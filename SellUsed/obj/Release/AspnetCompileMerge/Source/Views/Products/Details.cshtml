@@ -1,0 +1,100 @@
+﻿@using SellUsed.Models
+@using SellUsed.Utility
+@model SellUsed.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <div class="pull-right">
+        @if (Model.ifFavorite)
+        {
+            <div id="favoriteButton" class="glyphicon glyphicon-star pull-right" data-id="@Model.Product.ProductId" style="cursor: pointer">
+                <span> </span>
+            </div>
+        }
+        else
+        {
+            <div id="favoriteButton" class="glyphicon glyphicon-star-empty pull-right" data-id="@Model.Product.ProductId" style="cursor: pointer">
+                <span> </span>
+            </div>
+        }
+
+        @if (OnlineUsersHelper.CheckIfUserOnline((string) TempData["Username"]))
+        {
+            <div class="btn btn-info pull-right" onclick="location.href = '@Url.Action("Create", "Chat", new {id = Model.Product.UserId})'">
+                Contact @TempData["Username"] (Online)
+            </div>
+        }
+        else
+        {
+            <div class="btn btn-info pull-right" onclick="location.href = '@Url.Action("Create", "Chat", new {id = Model.Product.UserId})'">
+                Contact @TempData["Username"] (Offline)
+            </div>
+        }
+    </div>
+
+    <hr/>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Price)
+            @if (Model.Product.Category == Category.Jobs)
+            {
+                <span>/h</span>
+            }
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Category)
+        </dd>
+
+        <dt>
+            <span>Views: </span>
+        </dt>
+
+        <dd>
+            @Model.VisitTime
+        </dd>
+
+        <dt>
+            <span>Owner: </span>
+        </dt>
+
+        <dd>
+            @TempData["Username"]
+        </dd>
+
+    </dl>
+</div>
+<div>
+    @Html.Action("Index", "Image", new { productid = Model.Product.ProductId })
+</div>
+<p>
+    <a href='javascript:history.go(-1)'>Go Back</a>   
+</p>
